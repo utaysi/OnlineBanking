@@ -1,0 +1,14 @@
+# Ignore the entire 'private' folder
+/private/
+
+# Ignore all .ipynb_checkpoints folders
+**/.ipynb_checkpoints/
+
+# Ignore .ipynb_checkpoints files
+*.ipynb_checkpoints
+
+# Ignore all CSV files
+*.csv
+
+# Ignore all PNG files
+*.png
