@@ -4,11 +4,11 @@
 # Ignore all .ipynb_checkpoints folders
 **/.ipynb_checkpoints/
 
+# Ignore all .virtual_documents folders
+**/.virtual_documents/
+
 # Ignore .ipynb_checkpoints files
 *.ipynb_checkpoints
 
 # Ignore all CSV files
 *.csv
-
-# Ignore all PNG files
-*.png

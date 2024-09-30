@@ -25,6 +25,18 @@ This Jupyter Notebook-based project is designed to analyze financial transaction
 - Top 10 largest negative transactions for each month
 - Automated graph generation for all available months
 
+## Screenshots
+
+### Monthly Analysis Example
+![Monthly Analysis](demo-images/demo-monthly.png)
+
+Monthly analysis view, including the account balance graph and the top 10 largest negative transactions for a specific month.
+
+### Overall Account Balance
+![Overall Account Balance](demo-images/demo-overall.png)
+
+Account balance over time view, providing a comprehensive summary of financial trends across multiple months.
+
 ## Requirements
 
 - Python 3.x
