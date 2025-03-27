@@ -12,3 +12,7 @@
 
 # Ignore all CSV files
 *.csv
+
+# Misc
+.venv/
+.DS_Store
