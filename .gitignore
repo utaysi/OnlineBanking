@@ -16,3 +16,4 @@
 # Misc
 .venv/
 .DS_Store
+src/__pycache__/
