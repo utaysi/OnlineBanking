@@ -51,16 +51,14 @@ for i, month in enumerate(available_months, 1):
 
 # Create a folder to store the monthly graphs
 import os
+from tqdm import tqdm
 if not os.path.exists("private/images/monthly_graphs"):
     os.makedirs("private/images/monthly_graphs")
 
 # Iterate through all available months and generate monthly graphs
-for i, selected_month in enumerate(available_months):
+for selected_month in tqdm(available_months, desc="Generating monthly graphs"):
     # Filter data for selected month
     selected_data = data[data['Booking_Date'].dt.to_period('M') == selected_month]
 
     # Generate monthly graph
     generate_monthly_graph(data, selected_month)
-    percentage = (i + 1) / len(available_months) * 100
-    print(f"\rProgress: {percentage:.2f}%", end="")
-print()  # Add a newline at the end
