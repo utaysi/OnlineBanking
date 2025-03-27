@@ -14,7 +14,7 @@ This project performs financial data analysis on CSV files, including data proce
 
 ## Overview
 
-This Jupyter Notebook-based project is designed to analyze financial transaction data from CSV files. It provides various functionalities such as data processing, monthly summaries, and visualization of account balances and transactions.
+This Python script-based project is designed to analyze financial transaction data from CSV files. It provides various functionalities such as data processing, monthly summaries, and visualization of account balances and transactions. The codebase is modularized into separate components for data processing, visualization, and utilities.
 
 ## Features
 
@@ -24,6 +24,8 @@ This Jupyter Notebook-based project is designed to analyze financial transaction
 - Monthly detailed analysis with graphs and tables
 - Top 10 largest negative transactions for each month
 - Automated graph generation for all available months
+- Chronological transaction ordering within days (oldest to newest)
+- Modular and maintainable code architecture
 
 ## Screenshots
 
@@ -40,11 +42,11 @@ Account balance over time view, providing a comprehensive summary of financial t
 ## Requirements
 
 - Python 3.x
-- Jupyter Notebook
 - pandas
 - matplotlib
 - seaborn
 - tabulate
+- tqdm
 
 ## Installation
 
@@ -56,39 +58,52 @@ Account balance over time view, providing a comprehensive summary of financial t
 
 2. Install the required packages:
    ```
-   pip install pandas matplotlib seaborn tabulate
-   ```
-
-3. Launch Jupyter Notebook:
-   ```
-   jupyter notebook
+   pip install pandas matplotlib seaborn tabulate tqdm
    ```
 
 ## Usage
 
 1. Place your CSV file in the `private/import/` directory and name it `import.csv`.
 
-2. Open the `Financial_Data_Analysis.ipynb` notebook in Jupyter.
+2. Run the main script:
+   ```
+   python online_banking.py
+   ```
 
-3. Run the cells in order to perform the analysis.
+3. The script will automatically:
+   - Load and preprocess your financial data
+   - Display basic information about the data
+   - Calculate monthly summaries
+   - Generate an overall account balance graph
+   - Generate detailed monthly graphs for each available month
+   - Save all generated graphs to the `private/images/` directory
 
-4. The script will generate graphs and tables for each month, saving them in the `private/images/` directory.
-
-5. You can interact with the notebook to select specific months for detailed analysis.
+4. The monthly graphs will be saved in the `private/images/monthly_graphs/` directory with filenames like `YYYY-MM_graph.png`.
 
 ## File Structure
 
 ```
 financial-data-analysis/
 │
-├── Financial_Data_Analysis.ipynb
-├── README.md
-├── private/
+├── online_banking.py                # Main script file
+├── README.md                        # This file
+├── src/                             # Source code directory
+│   ├── data_processing.py           # Data loading and processing
+│   ├── visualization.py             # Data visualization
+│   └── utils.py                     # Utility functions
+├── plans/                           # Project planning documents
+│   ├── transaction_ordering_plan.md
+│   └── transaction_ordering_results.md
+├── private/                         # Private data (not tracked by git)
 │   ├── import/
-│   │   └── import.csv
+│   │   └── import.csv               # Your financial data file
 │   └── images/
-│       ├── balance_graph_all.png
-│       └── YYYY-MM_graph.png
+│       ├── balance_graph_all.png    # Overall balance graph
+│       └── monthly_graphs/          # Monthly detailed graphs
+│           └── YYYY-MM_graph.png
+├── demo-images/                     # Demo images for README
+│   ├── demo-monthly.png
+│   └── demo-overall.png
 └── .gitignore
 ```
 
