@@ -7,7 +7,7 @@ def load_and_preprocess_data():
     Returns:
         pandas.DataFrame: The preprocessed financial data.
     """
-    file_path = "data/import.csv"
+    file_path = "private/import/import.csv"
 
     # Read the CSV file
     try:

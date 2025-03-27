@@ -55,9 +55,12 @@ if not os.path.exists("private/images/monthly_graphs"):
     os.makedirs("private/images/monthly_graphs")
 
 # Iterate through all available months and generate monthly graphs
-for selected_month in available_months:
+for i, selected_month in enumerate(available_months):
     # Filter data for selected month
     selected_data = data[data['Booking_Date'].dt.to_period('M') == selected_month]
 
     # Generate monthly graph
     generate_monthly_graph(data, selected_month)
+    percentage = (i + 1) / len(available_months) * 100
+    print(f"\rProgress: {percentage:.2f}%", end="")
+print()  # Add a newline at the end
