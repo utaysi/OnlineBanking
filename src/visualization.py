@@ -7,31 +7,45 @@ from tabulate import tabulate
 import os
 import pandas as pd
 
+# Set the style
+plt.style.use('seaborn-v0_8-dark')
+
+# Set default colors
+facecolor = 'black'
+axescolor = '#333333'
+labelcolor = 'white'
+
 def format_currency(amount):
     """Formats the amount as currency."""
     return f"€{amount:.2f}"
 
 def generate_all_time_graph(data):
     """Generates a graph of the account balance over time."""
-    plt.figure(figsize=(12, 6))
-    plt.plot(data['Booking_Date'], data['Balance_After_Booking'])
-    plt.title('Account Balance Over Time')
-    plt.xlabel('Date')
-    plt.ylabel('Balance')
-    plt.xticks(rotation=45)
+    fig, ax = plt.subplots(figsize=(12, 6), facecolor=facecolor)
+    ax.plot(data['Booking_Date'], data['Balance_After_Booking'], color='skyblue')
+    ax.set_title('Account Balance Over Time', color=labelcolor)
+    ax.set_xlabel('Date', color=labelcolor)
+    ax.set_ylabel('Balance', color=labelcolor)
+    ax.tick_params(axis='x', rotation=45, color=labelcolor, labelcolor=labelcolor)
+    ax.tick_params(axis='y', color=labelcolor, labelcolor=labelcolor)
+    ax.set_facecolor(axescolor)
+    ax.spines['bottom'].set_color(labelcolor)
+    ax.spines['top'].set_color(labelcolor)
+    ax.spines['left'].set_color(labelcolor)
+    ax.spines['right'].set_color(labelcolor)
 
     # Set the x-axis to show months
-    plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
-    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
+    ax.xaxis.set_major_locator(mdates.MonthLocator())
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
 
     # Add vertical lines for each month
     for month in pd.date_range(start=data['Booking_Date'].min(), end=data['Booking_Date'].max(), freq='MS'):
-        plt.axvline(month, color='gray', linestyle='--', alpha=0.5)
+        ax.axvline(month, color='gray', linestyle='--', alpha=0.5)
 
-    plt.tight_layout()
+    fig.tight_layout()
 
     # Save the balance graph as an image file
-    plt.savefig('private/images/balance_graph_all.png', dpi=300)
+    plt.savefig('private/images/balance_graph_all.png', dpi=300, facecolor=fig.get_facecolor())
 
     # Save the balance graph as an image file
 
@@ -41,14 +55,16 @@ def generate_monthly_graph(data, selected_month):
     selected_data = data[data['Booking_Date'].dt.to_period('M') == selected_month]
 
     # Create a figure with two subplots
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 14), gridspec_kw={'height_ratios': [2, 1]})
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 14), gridspec_kw={'height_ratios': [2, 1]}, facecolor=facecolor)
+    ax1.set_facecolor(axescolor)
+    ax2.set_facecolor(axescolor)
 
     # Plot balance graph
-    ax1.plot(selected_data['Booking_Date'], selected_data['Balance_After_Booking'], marker='o')
-    ax1.set_title(f'Account Balance - {selected_month}', fontsize=14)
-    ax1.set_xlabel('Date', fontsize=10)
-    ax1.set_ylabel('Balance', fontsize=10)
-    ax1.tick_params(axis='both', which='major', labelsize=8)  # Reduce tick label size
+    ax1.plot(selected_data['Booking_Date'], selected_data['Balance_After_Booking'], marker='o', color='skyblue')
+    ax1.set_title(f'Account Balance - {selected_month}', fontsize=14, color=labelcolor)
+    ax1.set_xlabel('Date', fontsize=10, color=labelcolor)
+    ax1.set_ylabel('Balance', fontsize=10, color=labelcolor)
+    ax1.tick_params(axis='both', which='major', labelsize=8, color=labelcolor, labelcolor=labelcolor)  # Reduce tick label size
 
     # Set x-axis to show days
     ax1.xaxis.set_major_locator(mdates.DayLocator())
@@ -89,24 +105,25 @@ def generate_monthly_graph(data, selected_month):
         for j, width in enumerate(col_widths):
             if i == 0:
                 cell_text = ['Date', 'Amount', 'Name', 'Purpose'][j]
-                cell_color = '#f0f0f0'
+                cell_color = axescolor
                 font_weight = 'bold'
             else:
                 cell_text = table_data[i-1][j]
-                cell_color = 'white'
+                cell_color = axescolor
                 font_weight = 'normal'
-            table.add_cell(i, j, width=width, height=1/n_rows, text=cell_text, 
+            table.add_cell(i, j, width=width, height=1/n_rows, text=cell_text,
                            loc='center', facecolor=cell_color)
             table._cells[(i, j)]._text.set_fontweight(font_weight)
+            table._cells[(i, j)]._text.set_color(labelcolor)
 
     ax2.add_table(table)
-    ax2.set_title('Top 10 Largest Negative Transactions', fontsize=12)
+    ax2.set_title('Top 10 Largest Negative Transactions', fontsize=12, color=labelcolor)
     ax2.axis('off')
 
     # Adjust layout
     plt.tight_layout()
 
     # Save the graph as an image file
-    plt.savefig(f'private/images/monthly_graphs/{selected_month}_graph.png', dpi=300, bbox_inches='tight')
+    plt.savefig(f'private/images/monthly_graphs/{selected_month}_graph.png', dpi=300, bbox_inches='tight', facecolor=fig.get_facecolor())
 
     # Save the monthly graph as an image file
