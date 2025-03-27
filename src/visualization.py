@@ -59,8 +59,9 @@ def generate_monthly_graph(data, selected_month):
     ax1.set_facecolor(axescolor)
     ax2.set_facecolor(axescolor)
 
+    # Calculate horizontal offset
     # Plot balance graph
-    ax1.plot(selected_data['Booking_Date'], selected_data['Balance_After_Booking'], marker='o', color='skyblue')
+    ax1.plot(selected_data['Virtual_Booking_Date'], selected_data['Balance_After_Booking'], marker='o', color='skyblue')
     ax1.set_title(f'Account Balance - {selected_month}', fontsize=14, color=labelcolor)
     ax1.set_xlabel('Date', fontsize=10, color=labelcolor)
     ax1.set_ylabel('Balance', fontsize=10, color=labelcolor)

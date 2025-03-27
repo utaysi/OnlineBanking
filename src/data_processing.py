@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 def load_and_preprocess_data():
     """
@@ -58,9 +59,15 @@ def load_and_preprocess_data():
         except ValueError:
             print(f"Could not convert column {col} to numeric. Please check the data.")
             raise
-    
-    return data
 
+    # Calculate virtual timestamps with random offset
+    data['Transaction_Order'] = data.groupby('Booking_Date').cumcount()
+    data['Transactions_Per_Day'] = data.groupby('Booking_Date')['Booking_Date'].transform('count')
+    data['Virtual_Timestamp'] = 1 - (data['Transaction_Order'] / data['Transactions_Per_Day'])
+    data['Virtual_Timestamp'] = data['Virtual_Timestamp'].clip(0, 1)  # Ensure the timestamp stays within 0 and 1
+    data['Virtual_Booking_Date'] = data['Booking_Date'] + pd.to_timedelta(data['Virtual_Timestamp'], unit='D')
+
+    return data
 def calculate_monthly_summary(data):
     """
     Calculates the monthly summary of the financial data.
