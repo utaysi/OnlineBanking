@@ -49,20 +49,15 @@ print("Available months:")
 for i, month in enumerate(available_months, 1):
     print(f"{i}. {month}")
 
-# Prompt user for month selection
-while True:
-    try:
-        selection = int(input("\nEnter the number of the month you want to analyze: "))
-        if 1 <= selection <= len(available_months):
-            selected_month = available_months[selection - 1]
-            break
-        else:
-            print("Invalid selection. Please enter a number from the list.")
-    except ValueError:
-        print("Invalid input. Please enter a number.")
+# Create a folder to store the monthly graphs
+import os
+if not os.path.exists("private/images/monthly_graphs"):
+    os.makedirs("private/images/monthly_graphs")
 
-# Filter data for selected month
-selected_data = data[data['Booking_Date'].dt.to_period('M') == selected_month]
+# Iterate through all available months and generate monthly graphs
+for selected_month in available_months:
+    # Filter data for selected month
+    selected_data = data[data['Booking_Date'].dt.to_period('M') == selected_month]
 
-# Generate monthly graph
-generate_monthly_graph(data, selected_month)
+    # Generate monthly graph
+    generate_monthly_graph(data, selected_month)

@@ -33,8 +33,7 @@ def generate_all_time_graph(data):
     # Save the balance graph as an image file
     plt.savefig('private/images/balance_graph_all.png', dpi=300)
 
-    # Display the plot
-    plt.show()
+    # Save the balance graph as an image file
 
 def generate_monthly_graph(data, selected_month):
     """Generates a graph of the account balance and top spending for a specific month."""
@@ -108,7 +107,6 @@ def generate_monthly_graph(data, selected_month):
     plt.tight_layout()
 
     # Save the graph as an image file
-    plt.savefig(f'private/images/{selected_month}_graph.png', dpi=300, bbox_inches='tight')
+    plt.savefig(f'private/images/monthly_graphs/{selected_month}_graph.png', dpi=300, bbox_inches='tight')
 
-    # Display the plot
-    plt.show()
+    # Save the monthly graph as an image file
